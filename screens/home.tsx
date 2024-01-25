@@ -1,11 +1,11 @@
 import { format, subDays } from 'date-fns';
 import React, { useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { Button, FlatList, Text, View } from 'react-native';
 
-function Home(): React.JSX.Element {
+function Home({navigation}): React.JSX.Element {
     // const [dates, setDates] = useState([])
 
-    const today = Date()
+    const today = new Date()
     const [loading, setLoading] = useState(false)
     // use eachDayOfInterval
     const [lastDate, setLastDate] = useState(7)
@@ -39,7 +39,7 @@ function Home(): React.JSX.Element {
         setDates([...dates, ...newDates])
         setLoading(false)
     }
-
+    
     function getRenderItem({item}: ItemProps): React.JSX.Element {
         return (
             <>
@@ -53,6 +53,10 @@ function Home(): React.JSX.Element {
                         margin: 10,}}>
                     {format(item, "do MMM yyyy")}
                 </Text>
+                <Button
+                    title='Deadlift'
+                    onPress={() => navigation.navigate('Exercise', {name: 'Deadlift'})}
+                />
                 <Text>
                     --------------------------------
                 </Text>
