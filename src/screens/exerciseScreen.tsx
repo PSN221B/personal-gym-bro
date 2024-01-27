@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 
-const Exercise = ({navigation, route}) => {
+const ExerciseScreen = ({navigation, route}) => {
     return (
         <Text>
             {route.params.name}
@@ -10,4 +10,4 @@ const Exercise = ({navigation, route}) => {
 }
 
 
-export default Exercise;
+export default ExerciseScreen;
