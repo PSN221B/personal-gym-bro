@@ -1,48 +1,54 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { format } from 'date-fns';
 
 // Define your topics
-const topics = ['Topic 1', 'Topic 2', 'Topic 3', 'Topic 4'];
+const exercises = ['Topic 1', 'Topic 2', 'Topic 3', 'Topic 4'];
 
-const DateDayWithTopics = () => {
+const DateDayWithExercises = ({date}) => {
   return (
     <View style={styles.container}>
-      <DateDay />
-      <TopicButtons topics={topics} />
+      <DateDay date={date}/>
+      <Exercises exercises={exercises} />
     </View>
   );
-};
+}
 
-const DateDay = () => {
-  // Sample data, you can make this dynamic
-  const date = '01/25/2024';
-  const day = 'Thursday';
 
+const DateDay = ({ date }) => {
   return (
     <View style={styles.dateDayContainer}>
-      <Text style={styles.dateText}>{date}</Text>
-      <Text style={styles.dayText}>{day}</Text>
+      <Text style={styles.dateText}>{format(date, "do MMM yyyy")}</Text>
+      <Text style={styles.dayText}>{format(date, "E")}</Text>
     </View>
   );
-};
+}
 
-const TopicButtons = ({ topics }: { topics: string[] }) => {
+const Exercises = ({ exercises }: { exercises: string[] }) => {
   return (
-    <ScrollView style={styles.topicsContainer} horizontal={true}>
-      {topics.map((topic, index) => (
-        <View key={index} style={styles.buttonContainer}>
-          <Button title={topic} onPress={() => console.log(`${topic} pressed`)} />
-        </View>
-      ))}
-    </ScrollView>
+    <View style={styles.exercisesContainer}>
+      {
+      exercises.map((exercise, index) => {
+        return (    
+            <View key={index} style={styles.exerciseView}>
+                <Text>
+                    {exercise}
+                </Text>
+            </View>
+        );
+        })
+      }
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    borderWidth: 1,
+    borderBlockColor: 'black',
     padding: 20,
   },
   dateDayContainer: {
@@ -56,13 +62,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'grey',
   },
-  topicsContainer: {
-    // Styles for the scroll view containing the buttons
+  exercisesContainer: {
+    flexDirection: 'column',
   },
-  buttonContainer: {
-    marginHorizontal: 5,
-    // Additional styles for the button container if needed
-  },
+  exerciseView: {
+    borderWidth: 1,
+    padding: 20,
+    alignItems: 'center',
+  }
 });
 
-export default DateDayWithTopics;
+export default DateDayWithExercises;

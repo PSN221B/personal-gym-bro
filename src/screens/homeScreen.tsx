@@ -1,12 +1,16 @@
 import { format, subDays } from 'date-fns';
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
-import { Card, Button, Text, Avatar } from 'react-native-paper';
+import { FlatList, StyleSheet } from 'react-native';
+import { AnimatedFAB } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DateDayWithExercises from '../components/dateDay'
+import AddExerciseFAB from '../components/addExeciseFAB'
 
-function Home({navigation}): React.JSX.Element {
+function HomeScreen({navigation}): React.JSX.Element {
     // const [dates, setDates] = useState([])
 
+    const [isVisible, setIsVisible] = useState(true)
+    const [isExtended, setIsExtended] = useState(true)
     const today = new Date()
     const [loading, setLoading] = useState(false)
     // use eachDayOfInterval
@@ -44,15 +48,10 @@ function Home({navigation}): React.JSX.Element {
     
     
     function getRenderItem({item}: ItemProps): React.JSX.Element {
-
+        
         return (
-           
-            <Card>
-                <Card.Content>
-                <Text variant="titleLarge">{format(item, "do MMM yyyy")}</Text>
-                <Text variant="bodyMedium">{format(item, "E")}</Text>
-                </Card.Content>
-            </Card>
+            <DateDayWithExercises date={item} />
+
 
               
 
@@ -77,18 +76,31 @@ function Home({navigation}): React.JSX.Element {
         //         </Text> 
     }
 
+    const onScroll = ({ nativeEvent }) => {
+        const currentScrollPosition =
+          Math.floor(nativeEvent?.contentOffset?.y) ?? 0;
+        setIsExtended(currentScrollPosition <= 0);
+    }
+    
     return (
         <SafeAreaView>
-            <FlatList
+            <FlatList onScroll={onScroll}
                 data={dates}
                 renderItem={getRenderItem}
                 inverted={true}
                 onEndReached={fetchNextPage}
                 onEndReachedThreshold={0.8}
             />
+            <AddExerciseFAB
+                label={'Track Exercise'}
+                extended={isExtended}
+                visible={isVisible}
+                animateFrom={'right'}
+                navigation={navigation}
+            />
             
         </SafeAreaView>
     );
 } 
 
-export default Home;
+export default HomeScreen;

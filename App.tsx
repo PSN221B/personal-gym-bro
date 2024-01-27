@@ -14,8 +14,9 @@ import {
   View,
 } from 'react-native';
 
-import Home from './screens/home.tsx'
-import Exercise from './screens/exercise.tsx';
+import HomeScreen from './src/screens/homeScreen.tsx'
+import ExerciseScreen from './src/screens/exerciseScreen.tsx';
+import SearchScreen from './src/screens/searchScreen.tsx';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -38,14 +39,18 @@ function App(): React.JSX.Element {
     <PaperProvider theme={theme}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="HomeScreen">
             <Stack.Screen 
-              name="Home" 
-              component={Home} 
+              name="HomeScreen" 
+              component={HomeScreen} 
             />
             <Stack.Screen
-              name="Exercise"
-              component={Exercise}
+              name="SearchScreen"
+              component={SearchScreen}
+            />
+            <Stack.Screen
+              name="ExerciseScreen"
+              component={ExerciseScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
